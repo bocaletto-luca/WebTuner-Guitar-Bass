@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WebTuner – Guitar & Bass | Fast, Accurate, Free Online Tuner</title>
+  <meta name="description" content="A fast, accurate guitar and bass tuner that runs in your browser. Chromatic mode, cents meter, reference tones, and A4 calibration." />
+  <meta name="keywords" content="guitar tuner,bass tuner,online tuner,chromatic tuner,web audio,cent deviation,A4 440" />
+  <meta name="author" content="Luca Bocaletto" />
+  <meta name="theme-color" content="#0b0d10" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="WebTuner – Guitar & Bass" />
+  <meta property="og:description" content="Accurate online tuner for guitar and bass with chromatic mode and reference tones." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bocaletto-luca.github.io/WebTuner-Guitar&Bass/" />
+  <meta property="og:image" content="favicon.svg" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="WebTuner – Guitar & Bass" />
+  <meta name="twitter:description" content="Accurate online tuner for guitar and bass with chromatic mode and reference tones." />
+  <meta name="twitter:image" content="favicon.svg" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="apple-touch-icon" href="favicon.svg" />
+
+  <!-- JSON-LD: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "WebTuner – Guitar & Bass",
+    "applicationCategory": "MusicApplication",
+    "operatingSystem": "Web",
+    "url": "https://bocaletto-luca.github.io/WebTuner-Guitar&Bass/",
+    "description": "A fast, accurate guitar and bass tuner that runs in your browser. Chromatic mode, cents meter, reference tones, and A4 calibration.",
+    "author": { "@type": "Person", "name": "Luca Bocaletto", "url": "https://github.com/bocaletto-luca" },
+    "keywords": "guitar tuner,bass tuner,online tuner,chromatic tuner,web audio,cent deviation,A4 440"
+  }
+  </script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <noscript>
+    <div class="noscript">This app requires JavaScript to run.</div>
+  </noscript>
+
+  <div class="wrap">
+    <header class="header">
+      <h1 class="title">WebTuner – Guitar & Bass</h1>
+      <div class="controls" role="group" aria-label="Controls">
+        <label class="legend" for="mode">Mode</label>
+        <select id="mode" aria-label="Tuning mode">
+          <option value="guitar">Guitar (E Standard)</option>
+          <option value="bass">Bass (E Standard)</option>
+          <option value="chromatic">Chromatic</option>
+        </select>
+
+        <label class="legend" for="a4">A4</label>
+        <input type="range" id="a4" min="430" max="450" value="440" aria-label="A4 calibration" />
+        <span id="a4v" class="legend" aria-live="polite">440 Hz</span>
+
+        <button id="start" class="btn primary">Start Tuner</button>
+        <button id="stop" class="btn" disabled>Stop</button>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="panel" aria-labelledby="detector">
+        <h2 id="detector" class="sr-only">Tuning detector</h2>
+        <div class="readout">
+          <div class="note" aria-live="polite" aria-atomic="true">
+            <div id="note" class="note-big" aria-label="Detected note">—</div>
+            <div id="oct" class="oct" aria-label="Octave"></div>
+            <div id="freq" class="freq" aria-label="Frequency">0.00 Hz</div>
+          </div>
+          <div class="meter" role="img" aria-label="Cents deviation meter">
+            <div class="meter-scale" id="scale">
+              <div class="centerline" aria-hidden="true"></div>
+              <div class="tick" style="left:0%"></div>
+              <div class="tick" style="left:25%"></div>
+              <div class="tick" style="left:50%"></div>
+              <div class="tick" style="left:75%"></div>
+              <div class="tick" style="left:100%"></div>
+              <div class="needle" id="needle" style="left:50%"></div>
+            </div>
+            <div class="row">
+              <div class="legend">Cents</div>
+              <div class="grow"></div>
+              <div id="cents" class="cent-read">0</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel" aria-labelledby="reference-tones">
+        <h2 id="reference-tones" class="sr-only">Reference tones</h2>
+        <div class="row space">
+          <div class="legend">Reference tones</div>
+          <div class="legend">Click to play</div>
+        </div>
+        <div id="strings" class="strings"></div>
+        <p class="legend tip">
+          Tip: Stop the tuner while listening to reference tones to avoid needle movement.
+        </p>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <small>© <span id="year"></span> Luca Bocaletto — MIT License</small>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(()=>{});
+      });
+    }
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
