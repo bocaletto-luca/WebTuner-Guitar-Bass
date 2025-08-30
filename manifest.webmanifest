@@ -1,0 +1,12 @@
+{
+  "name": "WebTuner – Guitar & Bass",
+  "short_name": "WebTuner",
+  "description": "A fast, accurate guitar and bass tuner that runs in your browser. Chromatic mode, cents meter, reference tones, and A4 calibration.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b0d10",
+  "theme_color": "#0b0d10",
+  "icons": [
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
